@@ -16,8 +16,8 @@ def solution(x: np.array, y: np.array) -> bool:
         #H0 - средние равны, x_mean = y_mean
         z_obs, p_val_mean = ztest (x,y,0,usevar='pooled')
         f = np.var(x, ddof=1)/np.var(y, ddof=1)
-        nun = x.size
-        dun = y.size
+        nun = x.size-1
+        dun = y.size-1
         p_val_var = 1-st.f.cdf(f, nun, dun)
         # print(f'P для дисперсии{p_val_var}')
         
@@ -26,3 +26,4 @@ def solution(x: np.array, y: np.array) -> bool:
         return (p_val_mean < a or p_val_var < a)
     else: 
         return True
+        

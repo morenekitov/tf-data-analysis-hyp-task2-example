@@ -12,18 +12,6 @@ def solution(x: np.array, y: np.array) -> bool:
     x = np.array(x).ravel()
     y = np.array(y).ravel()
     a = 0.01
-    if  (st.normaltest(x)[1]>a and st.normaltest(y)[1]>a):
-        #H0 - средние равны, x_mean = y_mean
-        z_obs, p_val_mean = ztest (x,y,0,usevar='pooled')
-        f = np.var(x, ddof=1)/np.var(y, ddof=1)
-        nun = x.size-1
-        dun = y.size-1
-        p_val_var = 1-st.f.cdf(f, nun, dun)
-        # print(f'P для дисперсии{p_val_var}')
-        
-
-
-        return (p_val_mean < a or p_val_var < a)
-    else: 
-        return True
+    p_ks = st.ks_2samp(x,y,method='asymp')[1]
+    return (p_ks < a)
         
